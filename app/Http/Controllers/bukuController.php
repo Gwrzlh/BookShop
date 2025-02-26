@@ -3,15 +3,18 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\buku;
+use Illuminate\Auth\Events\Validated;
 
-class buku extends Controller
+class bukuController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+       $bukus = buku::latest()->paginate(7);
+       return view('admin.index', compact('bukus'));
     }
 
     /**
@@ -19,7 +22,7 @@ class buku extends Controller
      */
     public function create()
     {
-        //
+        return view('buku.create');
     }
 
     /**
@@ -27,7 +30,7 @@ class buku extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**

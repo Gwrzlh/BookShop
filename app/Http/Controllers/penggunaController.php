@@ -12,7 +12,7 @@ class penggunaController extends Controller
      */
     public function index()
     {
-        $pengguna = pengguna::all(); // Ambil semua data dari tabel
+        $pengguna = pengguna::all(); 
         return view('owner.index', compact('pengguna'));
     }
 
@@ -21,7 +21,7 @@ class penggunaController extends Controller
      */
     public function create()
     {
-        //
+        return view('pengguna.create');
     }
 
     /**
