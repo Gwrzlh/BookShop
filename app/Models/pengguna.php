@@ -7,8 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class pengguna extends Model
 {
- use HasFactory;
+  use HasFactory;
 
-   protected $table = 'pengguna';
+  protected $table = 'pengguna';
+
+  public $timestamps = false;
+  protected $primaryKey = 'id_pengguna';
+
+  protected $fillable = ['username', 'nama_lengkap', 'role', 'password'];
+   
   
 }

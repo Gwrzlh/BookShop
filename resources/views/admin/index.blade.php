@@ -8,60 +8,28 @@
 </head>
 <body>
     <div>
-        <h1>Admin</h1>
-    </div>
-    <div>
-        <a href="#">User</a>
-    </div>
-
-    <div>
         <div>
-            <a href="#">Tambah buku</a>
+            <h1>Admin!</h1>
         </div>
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>No.</th>
-                    <th>Cover</th>
-                    <th>Judul</th>
-                    <th>penerbit</th>
-                    <th>pengarang</th>
-                    <th>Tahun Terbit</th>
-                    <th>Harga</th>
-                    <th>Stock</th>
-                    <th>Action</th>
-                </tr>
-            </thead>
-            
-                <tr>
-                    @foreach ( $bukus as $buku )
-                    <td>
-                        {{ $loop->iteration }}
-                    </td>
-                    <td>
-                      <img src="{{ asset('/storage/buku' . $buku->cover) }}" alt="cover buku">
-                    </td>   
-                    <td>
-                        {{ $buku->judul }}    
-                    </td>  
-                    <td>
-                        {{ $buku->penerbit }}
-                    </td>
-                    <td>
-                        {{ $buku->pengarang }}
-                    </td>
-                    <td>
-                        {{ $buku->tahun }}
-                    </td>
-                    <td>
-                        {{ $buku->harga }}
-                    </td>
-                    <td>
-                        {{ $buku->stock }}
-                    </td>
-                    @endforeach       
-                </tr>
-        </table>
+        <div>
+            <div>
+                <div>
+                    <h4>Table buku</h4>
+                </div>
+                @include('buku.index', ['bukus'=> \App\Models\buku::all()]) 
+            </div>
+        </div>
+        <div>
+            <div>
+                <div>
+                    <h4>table pengguna</h4>
+                </div>
+                  <div>
+                    @include('pengguna.index',['penggunas'=> \App\Models\pengguna::all()])
+                  </div>
+            </div>
+        </div>
     </div>
+    
 </body>
 </html>

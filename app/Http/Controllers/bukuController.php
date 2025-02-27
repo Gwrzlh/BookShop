@@ -14,7 +14,7 @@ class bukuController extends Controller
     public function index()
     {
        $bukus = buku::latest()->paginate(7);
-       return view('admin.index', compact('bukus'));
+       return view('buku.index', compact('bukus'));
     }
 
     /**
