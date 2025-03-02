@@ -76,11 +76,11 @@ class penggunaController extends Controller
     public function update(Request $request, string $id_pengguna)
     {
         $penggunas = $request -> validate([
-            'username'=>'required',
-            'namaLengkap'=>'required',
-            // 'password'=>'required|min:7|confirmed',
-            // 'password_confirmation' => 'required',
-            'role'=>'required'
+            'username' => 'required|string|max:255',
+            'namaLengkap' => 'required|string|max:255',
+            'role' => 'required|in:Admin,Owner,Kasir',
+            'password' => 'nullable|min:7|confirmed',
+            'password_confirmation' => 'required_with:password',
        ]);
 
        Pengguna::where('id_pengguna', $id_pengguna)->update([

@@ -10,4 +10,10 @@ class buku extends Model
   use HasFactory;
 
   protected $table = 'buku';
+  
+  public $timestamps = false;
+
+  protected $primaryKey = 'id_buku';
+
+  protected $fillable = ['judul', 'pengarang', 'penerbit', 'tahun', 'cover', 'harga', 'stock'];
 }

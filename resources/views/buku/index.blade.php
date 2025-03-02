@@ -16,14 +16,15 @@
                 <th>Action</th>
             </tr>
         </thead>
-        
+        @foreach ( $bukus as $buku )
             <tr>
-                @foreach ( $bukus as $buku )
+              
                 <td>
                     {{ $loop->iteration }}
                 </td>
                 <td>
-                  <img src="{{ asset('/storage/buku' . $buku->cover) }}" alt="cover buku">
+                    <img src="{{ asset('storage/cover/' . $buku->cover) }}" alt="cover buku">
+
                 </td>   
                 <td>
                     {{ $buku->judul }}    
@@ -43,7 +44,16 @@
                 <td>
                     {{ $buku->stock }}
                 </td>
-                @endforeach       
+                <td>
+                  <a href="{{ route('buku.edit', $buku->id_buku) }}">Edit</a>
+                  <form action="{{ route('buku.destroy', $buku->id_buku) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus pengguna ini?');" style="display: inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit">Hapus</button>
+                </form>
+                </td>
             </tr>
+            @endforeach       
+
     </table>
 </div>

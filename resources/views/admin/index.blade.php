@@ -10,6 +10,7 @@
     <div>
         <div>
             <h1>Admin!</h1>
+            <a href="{{ route('logout') }}">Logout</a>
         </div>
         <div>
             <div>
@@ -27,6 +28,14 @@
                   <div>
                     @include('pengguna.index',['penggunas'=> \App\Models\pengguna::all()])
                   </div>
+            </div>
+        </div>
+        <div>
+            <div>
+                <h4>Table transaksi</h4>
+            </div>
+            <div>
+                @include('kasir.index', ['transaksi'=> \App\Models\transaksi::all()])
             </div>
         </div>
     </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\transaksi;
 use Illuminate\Http\Request;
 
 class transaksiController extends Controller
@@ -11,15 +12,17 @@ class transaksiController extends Controller
      */
     public function index()
     {
-        //
+        $transaksi = transaksi::latest()->paginate(7);
+        return view('transaksi.index', compact('transaksi'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($id_transaksi)
     {
-        //
+        $transaksi = transaksi::findOrFail($id_transaksi);
+        return view('transaksi.create');
     }
 
     /**
@@ -27,7 +30,7 @@ class transaksiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
