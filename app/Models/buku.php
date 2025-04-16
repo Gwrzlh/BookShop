@@ -16,4 +16,9 @@ class buku extends Model
   protected $primaryKey = 'id_buku';
 
   protected $fillable = ['judul', 'pengarang', 'penerbit', 'tahun', 'cover', 'harga', 'stock'];
+  
+  public function transaksi()
+  {
+      return $this->hasMany(transaksi::class, 'id_buku');
+  }
 }

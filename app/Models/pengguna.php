@@ -16,5 +16,9 @@ class pengguna extends Model
 
   protected $fillable = ['username', 'nama_lengkap', 'role', 'password'];
    
+  public function transaksi()
+  {
+      return $this->hasMany(transaksi::class, 'id_pengguna');
+  }
   
 }

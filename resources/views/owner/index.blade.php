@@ -7,6 +7,21 @@
     <title>Document</title>
 </head>
 <body>
-   <h2>hallo owner</h2> 
+   <h2>hallo owner {{ session('namaLengkap') }}</h2>
+   <div>
+    <a href="{{ route('logout') }}">Logout</a>
+   </div>
+   
+   <div>
+    <div>
+        @include('buku.index', ['bukus'=> \App\Models\buku::all()])
+    </div>
+    <div>
+        @include('pengguna.index',['penggunas'=> \App\Models\pengguna::all()])
+    </div>
+    <div>
+        @include('kasir.index', ['transaksi'=> \App\Models\transaksi::all()])
+    </div>
+   </div>
 </body>
 </html>

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\bukuController;
+use App\Http\Controllers\kasirController;
 use App\Http\Controllers\loginController;
 use App\Http\Controllers\penggunaController;
 use Illuminate\Support\Facades\Route;
@@ -8,10 +9,14 @@ use App\Http\Controllers\transaksiController;
 use App\Http\Middleware\checkUser;
 use App\Http\Middleware\CheckUserRole;
 use Illuminate\Support\Facades\Session;
+use App\Models\transaksi;
 
 Route::resource('pengguna', penggunaController::class);
 Route::resource('buku', bukuController::class);
 Route::resource('transaksi', transaksiController::class);
+Route::resource('kasir', kasirController::class);
+Route::post('kasir/buku/{id_buku}', [kasirController::class, 'tambahKeKeranjang'])->name('tambahkeranjang');
+Route::post('kasir/hapusdarikeranjang/{id_buku}', [kasirController::class, 'hapusDariKeranjang'])->name('hapuskeranjang');
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -45,11 +50,11 @@ Route::middleware(['checkRole:Owner'])->group(function () {
         return view('owner.index');
     })->name('owner');
 });
-Route::middleware(['checkRole:Kasir'])->group(function () {
-    Route::get('/kasir', function () {
-        return view('kasir.index');
-    })->name('kasir');
-});
+// Route::middleware(['checkRole:Kasir'])->group(function () {
+//     Route::get('/kasir', function () {
+//         return view('kasir.create');
+//     })->name('kasir');
+// });
 
 
 

@@ -45,6 +45,8 @@ public function auth(Request $request)
     // Set session
     Session::put('logged_user', $user->id_pengguna);
     Session::put('user_role', $user->role);
+    Session::put('namaLengkap',$user->nama_lengkap);
+    // Session::put('idPengguna', $user->)
     session()->save();
 
     // Debugging untuk memastikan session tersimpan
@@ -53,7 +55,7 @@ public function auth(Request $request)
     // Redirect berdasarkan role
     if ($user->role == 'Kasir') {
         // dd("Redirecting to kasir"); // Debugging
-        return redirect()->route('kasir');
+        return redirect()->route('kasir.index');
     } elseif ($user->role == 'Owner') {
         // dd("Redirecting to owner"); // Debugging
         return redirect()->route('owner');

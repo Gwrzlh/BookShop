@@ -10,9 +10,10 @@ class transaksi extends Model
     public $timestamps = false; 
     protected $primaryKey = 'id_transaksi';
     protected $fillable = ['id_transaksi', 'id_buku', 'id_pengguna','nama_pembeli','tgl_beli','bayar','kembalian','total_harga'];
+
     public function buku()
     {
-        return $this->belongsTo(buku::class, 'id_buku');
+         return $this->belongsTo(Buku::class, 'id_buku', 'id_buku');
     }
     public function pengguna()
     {
