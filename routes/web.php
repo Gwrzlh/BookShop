@@ -10,6 +10,7 @@ use App\Http\Middleware\checkUser;
 use App\Http\Middleware\CheckUserRole;
 use Illuminate\Support\Facades\Session;
 use App\Models\transaksi;
+use App\Http\Controllers\ownerController;
 
 Route::resource('pengguna', penggunaController::class);
 Route::resource('buku', bukuController::class);
@@ -46,9 +47,7 @@ Route::middleware(['checkRole:Admin'])->group(function () {
     })->name('admin');
 });
 Route::middleware(['checkRole:Owner'])->group(function () {
-    Route::get('/Owner', function () {
-        return view('owner.index');
-    })->name('owner');
+    Route::get('/owner',[ownerController::class,'index'])->name('owner');
 });
 // Route::middleware(['checkRole:Kasir'])->group(function () {
 //     Route::get('/kasir', function () {

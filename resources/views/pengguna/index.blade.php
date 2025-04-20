@@ -1,10 +1,10 @@
-<div class="row mt-4">
+{{-- <div class="row mt-4">
     <div class="col-md-12">
         <div class="card">
             <div class="card-header bg-success text-white d-flex justify-content-between">
                 <h4>Daftar Pengguna</h4>
                 <a href="{{ route('pengguna.create') }}" class="btn btn-light">Tambah Pengguna</a>
-            </div>
+            </div> --}}
             <div class="card-body">
                 <table class="table table-bordered table-striped text-center">
                     <thead class="table-dark">
@@ -38,7 +38,7 @@
                     </tbody>
                 </table>
             </div>
-        </div>
+        {{-- </div>
     </div>
 </div>
-</div>
+</div> --}}

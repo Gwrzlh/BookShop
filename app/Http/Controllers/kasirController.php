@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\buku;
 use App\Models\transaksi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Sleep;
 
-// use function Symfony\Component\String\b;
+
 
 class kasirController extends Controller
 {
@@ -58,6 +59,7 @@ class kasirController extends Controller
             'nama_pembeli' => 'required|string|max:255',
             'bayar' => 'required|numeric|min:0',
         ]);
+
 
         // Hitung total harga
         $totalHarga = array_sum(array_map(fn($item) => $item['harga'] * $item['jumlah'], $keranjang));
