@@ -44,6 +44,7 @@
 
             <div>
                 <input type="submit" value="Simpan Perubahan">
+                <a href="{{ route('admin') }}">Kembali</a>
             </div>
         </form>
     </div>

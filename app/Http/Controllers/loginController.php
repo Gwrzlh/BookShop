@@ -55,7 +55,7 @@ public function auth(Request $request)
     // Redirect berdasarkan role
     if ($user->role == 'Kasir') {
         // dd("Redirecting to kasir"); // Debugging
-        return redirect()->route('kasir.index');
+        return redirect()->route('kasir');
     } elseif ($user->role == 'Owner') {
         // dd("Redirecting to owner"); // Debugging
         return redirect()->route('owner');

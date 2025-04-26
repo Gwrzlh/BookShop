@@ -17,7 +17,7 @@ class penggunaController extends Controller
     public function index()
     {
         $penggunas = pengguna::all(); 
-        return view('pengguna.index', compact('penggunas'));
+        return view('admin.pengguna', compact('penggunas'));
     }
 
     /**

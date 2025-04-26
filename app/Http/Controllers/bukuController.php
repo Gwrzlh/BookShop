@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\buku;
 use Illuminate\Auth\Events\Validated;
 use Illuminate\Support\Facades\Storage;
+use App\Models\kategori;
 
 class bukuController extends Controller
 {
@@ -14,8 +15,9 @@ class bukuController extends Controller
      */
     public function index()
     {
-       $bukus = buku::latest()->paginate(7);
-       return view('buku.index', compact('bukus'));
+       $bukus = buku::with('kategori')->latest()->paginate(7);
+       $kategori = kategori::all();
+       return view('admin.buku', compact('bukus','kategori'));
     }
 
     /**
@@ -23,7 +25,9 @@ class bukuController extends Controller
      */
     public function create()
     {
-        return view('buku.create');
+        $bukus = buku::all();
+        $kategori = kategori::all();
+        return view('buku.create',compact('bukus','kategori'));
     }
 
     /**
@@ -39,7 +43,8 @@ class bukuController extends Controller
             'tahun'=>'required',
            'cover'=>'image|mimes:jpeg,jpg,png|max:2048',
            'harga'=>'required',
-           'stock'=>'required'
+           'stock'=>'required',
+           'kategori'=>'required'
         ]);
 
         $cover = $request->file('cover');
@@ -53,6 +58,7 @@ class bukuController extends Controller
         $buku->cover = $cover->hashName();
         $buku->harga = $request->harga;
         $buku->stock = $request->stock;
+        $buku->kategori_id = $request->kategori;
         $buku->save();
         return redirect()->route('admin');
     }
@@ -70,8 +76,8 @@ class bukuController extends Controller
      */
     public function edit($id_buku)
     {
-        $buku = buku::findOrFail($id_buku);
-        return view('buku.edit', compact('buku'));
+        $buku = buku::with('kategori')->findOrFail($id_buku);
+        return view('buku.edit', compact('buku','kategori'));
     }
 
     /**
@@ -85,7 +91,8 @@ class bukuController extends Controller
             'penerbit'=>'required',
             'tahun'=>'required',
             'harga'=>'required',
-            'stock'=>'required'
+            'stock'=>'required',
+            'kategori_id'=>'required',
         ]);
 
         $bukus = buku::findOrFail($id_buku);
@@ -102,7 +109,8 @@ class bukuController extends Controller
             'penerbit' => $request->penerbit,
             'tahun' => $request->tahun,
             'harga' => $request->harga,
-            'stock' => $request->stock
+            'stock' => $request->stock,
+            'kategori_id' => $request->kategori_id
         ]);
 
       }else{
@@ -112,7 +120,8 @@ class bukuController extends Controller
             'penerbit' => $request->penerbit,
             'tahun' => $request->tahun,
             'harga' => $request->harga,
-            'stock' => $request->stock
+            'stock' => $request->stock,
+            'kategori_id' => $request->kategori_id
         ]);
       }
       return redirect()->route('admin')->with('success', 'buku berhasil diupdate.');

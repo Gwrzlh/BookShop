@@ -1,5 +1,6 @@
 @extends('layouts.admin')
 
+
 @section('content')
 <div class="bg-white p-6 rounded shadow">
     <div class="flex justify-between items-center mb-4">
@@ -23,7 +24,9 @@
         </thead>
         <tbody>
             @foreach($bukus as $buku)
+            
             <tr class="border-t">
+                <td>{{ $loop->iteration }}</td>
                 <td class="px-4 py-2">
                     <img src="{{ asset('storage/cover/' . $buku->cover) }}" alt="cover buku" class="w-16 h-20 object-cover rounded shadow-sm border border-gray-200" width="50">    
                 </td>
@@ -47,3 +50,4 @@
     </table>
 </div>
 @endsection
+

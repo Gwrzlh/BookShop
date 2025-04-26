@@ -5,74 +5,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | Glass Style</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #F5EEDD;
-            background-size: cover;
-            min-height: 100vh;
-        }
-
-        .glass-card {
-            background: rgba(37, 37, 37, 0.1);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: rgb(16, 16, 16);
-        }
-
-        .form-control::placeholder {
-            color: #3a3939;
-        }
-
-        .form-control {
-            background-color: rgba(255, 255, 255, 0.2);
-            color: #3a3939;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .form-control:focus {
-            background-color: rgba(255, 255, 255, 0.3);
-            color: #3a3939;
-            border-color: rgba(255, 255, 255, 0.5);
-        }
-
-        .btn-lightglass {
-            background-color: rgba(255, 255, 255, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: #767575;
-            transition: all 0.3s ease;
-        }
-
-        .btn-lightglass:hover {
-            background-color: rgba(255, 255, 255, 0.4);
-            color: black;
-        }
-    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-    <div class="container d-flex align-items-center justify-content-center" style="min-height: 100vh;">
-        <div class="col-md-4">
-            <div class="glass-card text-center">
-                <h2 class="mb-4">Login</h2>
-                <form action="{{ route('login.auth')}}" method="POST">
-                    @csrf
-                    <div class="mb-3 text-start">
-                        <label for="username" class="form-label">Username</label>
-                        <input type="text" name="username" class="form-control" placeholder="Masukkan Username" required>
+    <div class="flex items-center justify-center min-h-screen bg-gray-100">
+        <div class="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg">
+            <form action="{{ route('login.auth') }}" method="POST">
+                @csrf
+                <div class="text-center mb-8">
+                    <h2 class="text-2xl font-bold tracking-tight text-gray-900">Login</h2>
+                </div>
+    
+                <div class="space-y-6">
+                    <div>
+                        <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+                        <input type="text" name="username" id="username" required
+                            class="py-1 mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
                     </div>
-                    <div class="mb-3 text-start">
-                        <label for="password" class="form-label">Password</label>
-                        <input type="password" name="password" class="form-control" placeholder="Masukkan Password" required>
+    
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                        <input type="password" name="password" id="password" required
+                            class="py-1 mt-2 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50">
                     </div>
-                    <div class="d-grid mt-4">
-                        <button type="submit" class="btn btn-lightglass">Login</button>
+    
+                    <div>
+                        <button type="submit"
+                            class="w-full flex justify-center rounded-md bg-indigo-600 px-4 py-2 text-white font-semibold hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            Sign in
+                        </button>
                     </div>
-                </form>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
+     
 </body>
 </html>

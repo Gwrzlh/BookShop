@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\bukuController;
 use App\Http\Controllers\kasirController;
+use App\Http\Controllers\kategoriController;
 use App\Http\Controllers\loginController;
 use App\Http\Controllers\penggunaController;
 use Illuminate\Support\Facades\Route;
@@ -11,13 +12,15 @@ use App\Http\Middleware\CheckUserRole;
 use Illuminate\Support\Facades\Session;
 use App\Models\transaksi;
 use App\Http\Controllers\ownerController;
+use App\Http\Controllers\strukController;
 
 Route::resource('pengguna', penggunaController::class);
-Route::resource('buku', bukuController::class);
 Route::resource('transaksi', transaksiController::class);
 Route::resource('kasir', kasirController::class);
+Route::resource('buku', bukuController::class);
 Route::post('kasir/buku/{id_buku}', [kasirController::class, 'tambahKeKeranjang'])->name('tambahkeranjang');
 Route::post('kasir/hapusdarikeranjang/{id_buku}', [kasirController::class, 'hapusDariKeranjang'])->name('hapuskeranjang');
+Route::resource('kategori',kategoriController::class);
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -49,6 +52,27 @@ Route::middleware(['checkRole:Admin'])->group(function () {
 Route::middleware(['checkRole:Owner'])->group(function () {
     Route::get('/owner',[ownerController::class,'index'])->name('owner');
 });
+Route::middleware(['checkRole:Kasir'])->group(function(){
+    Route::get('/kasir',[kasirController::class, 'index'])->name('kasir');
+});
+
+Route::get('/transaksi/{id}/struk', [strukController::class, 'generateStruk'])->name('GenerateStruk');
+Route::get('/struk/{id_transaksi}', [kasirController::class, 'struk'])->name('Struk');
+
+Route::post('/clear-id-transaksi', function () {
+    session()->forget('id_transaksi');
+})->name('ClearIdTransaksi');
+
+// adminroute
+
+Route::get('/admin/buku', [bukuController::class, 'index'])->name('admin.buku');
+
+Route::get('/admin/kasir',[transaksiController::class,'index'])->name('admin.transaksi');
+
+Route::get('/admin/pengguna',[penggunaController::class,'index'])->name('admin.pengguna');
+
+Route::get('/admin/kategori',[kategoriController::class,'index'])->name('admin.kategori');
+
 // Route::middleware(['checkRole:Kasir'])->group(function () {
 //     Route::get('/kasir', function () {
 //         return view('kasir.create');

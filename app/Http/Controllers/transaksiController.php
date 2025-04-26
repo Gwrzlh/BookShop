@@ -4,6 +4,7 @@
 
     use App\Models\transaksi;
     use Illuminate\Http\Request;
+    use App\Models\buku;
     
 
     class transaksiController extends Controller
@@ -13,8 +14,8 @@
          */
         public function index()
         {
-            $transaksi = transaksi::with('buku', 'pengguna')->latest()->paginate(7);
-            return view('kasir.create', compact('transaksi'));
+            $transaksi = transaksi::with('detailTransaksi.buku', 'pengguna')->latest()->paginate(7);
+            return view('admin.transkasi', compact('transaksi'));
         }
 
         /**

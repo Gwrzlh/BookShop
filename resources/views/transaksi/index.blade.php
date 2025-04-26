@@ -15,8 +15,8 @@
                             <th>Pembeli</th>
                             <th>Tanggal Transaksi</th>
                             <th>Tunai</th>
-                            <th>Kembalian</th>
                             <th>Total Transaksi</th>
+                            <th>Kembalian</th>
                             {{-- <th>Action</th> --}}
                         </tr>
                     </thead>
@@ -24,13 +24,20 @@
                         @foreach ($transaksi as $trans)
                         <tr>
                             <td class="text-center">{{ $loop->iteration }}</td>
-                            <td>{{ $trans->buku->judul }}</td>
+                            <td>
+                                <ul>
+                                    @foreach ($trans->detailTransaksi as $detail) 
+                                    <li>{{ $detail->buku->judul }} x {{ $detail->jumlah }} = Rp{{ number_format($detail->buku->harga) }}</li>
+                                        
+                                    @endforeach
+                                </ul>
+                            </td>
                             <td>{{ $trans->pengguna->nama_lengkap }}</td>
                             <td>{{ $trans->nama_pembeli }}</td>
                             <td>{{ $trans->tgl_beli }}</td>
-                            <td>Rp {{ number_format($trans->bayar, 0, ',', '.') }}</td>
-                            <td>Rp {{ number_format($trans->kembalian, 0, ',', '.') }}</td>
-                            <td>Rp {{ number_format($trans->total_harga, 0, ',', '.') }}</td>
+                            <td>Rp {{ number_format($trans->bayar) }}</td>
+                            <td>Rp {{ number_format($trans->total_harga) }}</td>
+                            <td>Rp {{ number_format($trans->kembalian) }}</td>
                             {{-- <td>
                                 <form action="{{ route('transaksi.destroy', $trans->id_transaksi) }}"  method="POST" onsubmit="return confirm('Yakin ingin menghapus transaksi ini?');" style="display: inline;">
                                     @csrf
