@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.owner')
 
 @section('content')
 <div class="container mx-auto px-4 py-6">
@@ -8,9 +8,7 @@
                 <h2 class="text-xl font-semibold text-gray-800">Daftar Kategori</h2>
                 <p class="text-sm text-gray-500">Semua kategori buku yang tersedia.</p>
             </div>
-            <a href="{{ route('kategori.create') }}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium">
-                + Tambah Kategori
-            </a>
+            
         </div>
 
         <div class="overflow-x-auto">
@@ -19,7 +17,6 @@
                     <tr>
                         <th class="px-6 py-3 font-semibold text-center">No.</th>
                         <th class="px-6 py-3 font-semibold text-center">Nama Kategori</th>
-                        <th class="px-6 py-3 font-semibold text-center">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200 text-center">
@@ -27,17 +24,7 @@
                     <tr class="hover:bg-gray-50">
                         <td class="px-6 py-4">{{ $loop->iteration }}</td>
                         <td class="px-6 py-4">{{ $kate->nama_Kategori }}</td>
-                        <td class="px-6 py-4 flex justify-center space-x-2">
-                            <a href="{{ route('kategori.edit', $kate->id) }}" class=" text-indigo-600 hover:text-indigo-900 text-sm font-medium">Edit</a>
-                            <p class="text-gray-400">|</p>
-                            <form action="{{ route('kategori.destroy', $kate->id) }}" method="POST" class="inline-block" onsubmit="return confirm('Yakin ingin menghapus kategori ini?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-red-600 hover:text-red-900 text-sm font-medium">
-                                    Hapus
-                                </button>
-                            </form>
-                        </td>
+                       
                     </tr>
                     @endforeach
                 </tbody>
@@ -45,6 +32,4 @@
         </div>
     </div>
 </div>
-
-
 @endsection

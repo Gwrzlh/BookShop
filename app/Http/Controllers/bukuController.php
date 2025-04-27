@@ -56,11 +56,11 @@ class bukuController extends Controller
         $buku->penerbit = $request->penerbit;
         $buku->tahun = $request->tahun;
         $buku->cover = $cover->hashName();
-        $buku->harga = $request->harga;
+        $buku->harga = str_replace(['.',',','Rp',''],'', $request->harga);
         $buku->stock = $request->stock;
         $buku->kategori_id = $request->kategori;
         $buku->save();
-        return redirect()->route('admin');
+        return redirect()->route('admin.buku');
     }
 
     /**
@@ -76,7 +76,8 @@ class bukuController extends Controller
      */
     public function edit($id_buku)
     {
-        $buku = buku::with('kategori')->findOrFail($id_buku);
+        $buku = buku::findOrFail($id_buku);
+        $kategori = kategori::all();
         return view('buku.edit', compact('buku','kategori'));
     }
 
@@ -124,7 +125,7 @@ class bukuController extends Controller
             'kategori_id' => $request->kategori_id
         ]);
       }
-      return redirect()->route('admin')->with('success', 'buku berhasil diupdate.');
+      return redirect()->route('admin.buku')->with('success', 'buku berhasil diupdate.');
 
     }
 
@@ -136,6 +137,6 @@ class bukuController extends Controller
         $bukus = buku::findOrFail($id_buku);
         $bukus->delete();
         
-        return redirect()->route('admin')->with('success', 'buku berhasil dihapus.');
+        return redirect()->route('admin.buku')->with('success', 'buku berhasil dihapus.');
     }
 }

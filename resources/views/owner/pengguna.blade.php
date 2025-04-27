@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.owner')
 
 @section('content')
 <div class="bg-white p-6 rounded-lg shadow mt-8">
@@ -7,9 +7,7 @@
             <h2 class="text-xl font-semibold text-gray-800">Daftar Pengguna</h2>
             <p class="text-sm text-gray-500">Semua akun pengguna terdaftar.</p>
         </div>
-        <a href="{{ route('pengguna.create') }}" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium">
-            + Tambah Pengguna
-        </a>
+       
     </div>
 
     <div class="overflow-x-auto">
@@ -21,7 +19,6 @@
                     <th class="px-6 py-3 font-semibold">Nama Lengkap</th>
                     <th class="px-6 py-3 font-semibold">Password</th>
                     <th class="px-6 py-3 font-semibold">Role</th>
-                    <th class="px-6 py-3 font-semibold text-center">Aksi</th>
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
@@ -32,19 +29,7 @@
                     <td class="px-6 py-4">{{ $pengguna->nama_lengkap }}</td>
                     <td class="px-6 py-4">******</td> <!-- Password disembunyikan -->
                     <td class="px-6 py-4">{{ $pengguna->role }}</td>
-                    <td class="px-6 py-4 flex justify-center space-x-2">
-                        <a href="{{ route('pengguna.edit', $pengguna->id_pengguna) }}" class="text-indigo-600 hover:text-indigo-900 text-sm font-medium">
-                            Edit
-                        </a>
-                        <p class="text-gray-400">|</p>
-                        <form action="{{ route('pengguna.destroy', $pengguna->id_pengguna) }}" method="POST" onsubmit="return confirm('Yakin ingin menghapus pengguna ini?');" class="inline">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="text-red-500 hover:text-red-600 text-sm font-medium">
-                                Hapus
-                            </button>
-                        </form>
-                    </td>
+                   
                 </tr>
                 @endforeach
             </tbody>

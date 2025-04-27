@@ -1,57 +1,88 @@
-<div class="container py-5">
-    {{-- <div class="mb-4 text-center">
-        <h1 class="fw-bold text-primary">Riwayat Transaksi Kasir</h1>
-    </div> --}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Riwayat Transaksi Kasir</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            font-size: 12px;
+        }
+        .container {
+            width: 100%;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: gray;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        thead {
+            background-color: #343a40;
+            color: #fff;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            vertical-align: top;
+        }
+        th {
+            text-align: center;
+            font-weight: bold;
+        }
+        td ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        td ul li {
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Riwayat Transaksi Kasir</h1>
 
-    <div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-striped table-bordered align-middle">
-                    <thead class="table-dark text-center">
-                        <tr>
-                            <th>No.</th>
-                            <th>Judul Buku</th>
-                            <th>Nama Kasir</th>
-                            <th>Pembeli</th>
-                            <th>Tanggal Transaksi</th>
-                            <th>Tunai</th>
-                            <th>Total Transaksi</th>
-                            <th>Kembalian</th>
-                            {{-- <th>Action</th> --}}
-                        </tr>
-                    </thead>
-                    <tbody class="text-center">
-                        @foreach ($transaksi as $trans)
-                        <tr>
-                            <td class="text-center">{{ $loop->iteration }}</td>
-                            <td>
-                                <ul>
-                                    @foreach ($trans->detailTransaksi as $detail) 
-                                    <li>{{ $detail->buku->judul }} x {{ $detail->jumlah }} = Rp{{ number_format($detail->buku->harga) }}</li>
-                                        
-                                    @endforeach
-                                </ul>
-                            </td>
-                            <td>{{ $trans->pengguna->nama_lengkap }}</td>
-                            <td>{{ $trans->nama_pembeli }}</td>
-                            <td>{{ $trans->tgl_beli }}</td>
-                            <td>Rp {{ number_format($trans->bayar) }}</td>
-                            <td>Rp {{ number_format($trans->total_harga) }}</td>
-                            <td>Rp {{ number_format($trans->kembalian) }}</td>
-                            {{-- <td>
-                                <form action="{{ route('transaksi.destroy', $trans->id_transaksi) }}"  method="POST" onsubmit="return confirm('Yakin ingin menghapus transaksi ini?');" style="display: inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
-                                </form>
-                            </td> --}}
-                        </tr>
+    <table>
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Judul Buku</th>
+                <th>Nama Kasir</th>
+                <th>Pembeli</th>
+                <th>Tanggal Transaksi</th>
+                <th>Tunai</th>
+                <th>Total Transaksi</th>
+                <th>Kembalian</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($transaksi as $trans)
+            <tr>
+                <td style="text-align: center;">{{ $loop->iteration }}</td>
+                <td>
+                    <ul>
+                        @foreach ($trans->detailTransaksi as $detail) 
+                        <li>{{ $detail->buku->judul }} x {{ $detail->jumlah }} = Rp{{ number_format($detail->buku->harga) }}</li>
                         @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
+                    </ul>
+                </td>
+                <td style="text-align: center;">{{ $trans->pengguna->nama_lengkap }}</td>
+                <td style="text-align: center;">{{ $trans->nama_pembeli }}</td>
+                <td style="text-align: center;">{{ $trans->tgl_beli }}</td>
+                <td style="text-align: center;">Rp {{ number_format($trans->bayar) }}</td>
+                <td style="text-align: center;">Rp {{ number_format($trans->total_harga) }}</td>
+                <td style="text-align: center;">Rp {{ number_format($trans->kembalian) }}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
 </div>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

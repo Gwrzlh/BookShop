@@ -33,7 +33,7 @@
                     </button>
                     <button type="submit"
                     class="inline-flex justify-center rounded-md bg-red-500 py-2 px-4 text-sm font-semibold text-white shadow-sm hover:bg-red-600 focus:outline focus:ring-2 focus:ring-indigo-500">
-                    <a href="{{ route('admin') }}">Beck</a>
+                    <a href="{{ route('admin.kategori') }}">Beck</a>
                 </button>
                 </div>
             </form>

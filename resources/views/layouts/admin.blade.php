@@ -1,39 +1,62 @@
-<!-- resources/views/layouts/admin.blade.php -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Dashboard Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
-   
 </head>
 
-<body class="flex min-h-screen bg-gray-100 font-display">
+<body class="flex min-h-screen bg-gray-100 font-sans">
 
     <!-- Sidebar -->
-    <aside class="w-64 bg-blue-7    00 text-white flex flex-col">
-        <div class="p-6 text-xl font-bold font-display border-b border-gray-700">Admin Panel</div>
-        <nav class="flex-1 p-4 space-y-2">
-            <a href="{{ route('admin.buku') }}" class="block py-2 px-4 rounded hover:bg-gray-700">📚 Data Buku</a>
-            <a href="{{ route('admin.pengguna') }}" class="block py-2 px-4 rounded hover:bg-gray-700">👥 Data Pengguna</a>
-            <a href="{{ route('admin.kategori') }}" class="block py-2 px-4 rounded hover:bg-gray-700">Data Kategori</a> 
-            <a href="{{ route('admin.transaksi') }}" class="block py-2 px-4 rounded hover:bg-gray-700">🧾 Transaksi</a>
+    <aside class="w-64 bg-indigo-600 text-white flex flex-col">
+        <!-- Logo -->
+        <div class="flex items-center justify-center h-20 border-indigo-500">
+            <svg class="h-8 w-8 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h4l3 8 4-16 3 8h4" />
+            </svg>
+        </div>
+
+        <!-- Menu -->
+        <nav class="flex-1 px-4 py-6 space-y-4">
+            <a href="{{ route('admin.buku') }}" class="flex items-center px-3 py-2 rounded-lg hover:bg-indigo-700 transition">
+                <span class="material-icons mr-3">menu_book</span> Data Buku
+            </a>
+            <a href="{{ route('admin.pengguna') }}" class="flex items-center px-3 py-2 rounded-lg hover:bg-indigo-700 transition">
+                <span class="material-icons mr-3">groups</span> Data Pengguna
+            </a>
+            <a href="{{ route('admin.kategori') }}" class="flex items-center px-3 py-2 rounded-lg hover:bg-indigo-700 transition">
+                <span class="material-icons mr-3">category</span> Data Kategori
+            </a>
+            <a href="{{ route('admin.transaksi') }}" class="flex items-center px-3 py-2 rounded-lg hover:bg-indigo-700 transition">
+                <span class="material-icons mr-3">receipt_long</span> Transaksi
+            </a>
         </nav>
+
+        <!-- Optional Section "Your Teams" -->
+
     </aside>
 
     <!-- Main content -->
     <div class="flex-1 flex flex-col">
-        <!-- Navbar -->
-        <header class="bg-white shadow p-4 flex justify-between items-center">
-            <span class="text-lg font-display font-semibold">Selamat Datang, {{ session('namaLengkap') }}</span>
-            <a href="{{ route('logout') }}" class="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600">Logout</a>
+        <!-- Navbar/Header -->
+        <header class="bg-white shadow-md p-4 flex justify-between items-center">
+            <span class="text-lg font-semibold text-indigo-700">
+                Selamat Datang, {{ session('namaLengkap') }}
+            </span>
+            <a href="{{ route('logout') }}" class="bg-rose-600 hover:bg-rose-500 text-white px-4 py-2 rounded-lg transition">
+                Logout
+            </a>
         </header>
 
         <!-- Content Section -->
-        <main class="flex-1 p-6">
+        <main class="flex-1 p-6 bg-gray-100">
             @yield('content')
         </main>
     </div>
+
+    <!-- Tambahkan Google Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 </body>
 </html>

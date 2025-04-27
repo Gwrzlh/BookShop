@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Session;
 use App\Models\transaksi;
 use App\Http\Controllers\ownerController;
 use App\Http\Controllers\strukController;
+use FontLib\Table\Type\name;
 
 Route::resource('pengguna', penggunaController::class);
 Route::resource('transaksi', transaksiController::class);
@@ -50,7 +51,7 @@ Route::middleware(['checkRole:Admin'])->group(function () {
     })->name('admin');
 });
 Route::middleware(['checkRole:Owner'])->group(function () {
-    Route::get('/owner',[ownerController::class,'index'])->name('owner');
+    Route::get('/owner',[ownerController::class, 'index'])->name('owner');
 });
 Route::middleware(['checkRole:Kasir'])->group(function(){
     Route::get('/kasir',[kasirController::class, 'index'])->name('kasir');
@@ -72,6 +73,16 @@ Route::get('/admin/kasir',[transaksiController::class,'index'])->name('admin.tra
 Route::get('/admin/pengguna',[penggunaController::class,'index'])->name('admin.pengguna');
 
 Route::get('/admin/kategori',[kategoriController::class,'index'])->name('admin.kategori');
+
+// ownerRoute
+
+Route::get('/owner/buku',[ownerController::class, 'buku'])->name('owner.buku');
+Route::get('/owner/pengguna',[ownerController::class, 'pengguna'])->name('owner.pengguna');
+Route::get('/owner/transaksi',[ownerController::class, 'transaksi'])->name('owner.transaksi');
+Route::get('/owner/kategori',[ownerController::class, 'kategori'])->name('owner.kategori');
+route::get('/owner/transaksi/filter',[ownerController::class, 'filter'])->name('owner.filter');
+
+Route::get('owner/transaksi/pdf',[ownerController::class, 'generatePdf'])->name('owner.Pdftransaksi');
 
 // Route::middleware(['checkRole:Kasir'])->group(function () {
 //     Route::get('/kasir', function () {

@@ -80,6 +80,11 @@ class kasirController extends Controller
             'kembalian' => $kembalian,
             'total_harga' => $totalHarga,
         ]);
+    
+     $penguranganstock = buku::findOrFail($idBuku);
+        $penguranganstock->stock -= $keranjang[$idBuku]['jumlah'];
+        $penguranganstock->save();
+
 
         // Simpan detail transaksi
         foreach ($keranjang as $item) {

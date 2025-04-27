@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.owner')
 
 @section('content')
 <div class="py-10">
@@ -12,6 +12,26 @@
                 <h2 class="text-xl font-semibold text-gray-800">Daftar Transaksi</h2>
                 <p class="text-sm text-gray-500">Semua transaksi penjualan tercatat di sini.</p>
             </div>
+            <form action="{{ route('owner.transaksi') }}" method="GET" class="flex items-center space-x-4">
+                <div class="flex items-center space-x-10 mb-4">
+                    <p>Cari Data sesuai tanggal:</p>
+                    <div>
+                        <label for="dari">Dari tanggal</label>
+                        <input type="date" name="dari">
+                    </div>
+               <div>
+                <label for="sampai">Sampai Tanggal</label>
+                <input type="date" name="sampai">
+               </div>
+               <div>
+                <button type="submit"
+                        class="inline-flex justify-center rounded-md bg-indigo-600 py-2 px-4 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus:outline focus:ring-2 focus:ring-indigo-500">
+                        Filter
+                    </button>
+               </div>
+            </div>
+               
+            </form>
             {{-- <a href="{{ route('transaksi.create') }}" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium">
                 + Tambah Transaksi
             </a> --}}
@@ -52,8 +72,13 @@
                     @endforeach
                 </tbody>
             </table>
+            <div class="flex justify-between m-5">
+                <div>
+                    <button type="submit" class="inline-flex justify-center rounded-md bg-red-500 py-2 px-4 text-sm font-semibold text-white shadow-sm hover:bg-red-600 focus:outline focus:ring-2 focus:ring-indigo-500">
+                        <a href="{{ route('owner.Pdftransaksi') }}">Download PDF</a></button>
+                </div>
+                <p class="font-semibold">Total Transaksi: Rp{{number_format($total_pendapatan)}}</p>
+            </div>
         </div>
     </div>
-    
-
 @endsection
