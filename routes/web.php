@@ -14,10 +14,11 @@ use App\Models\transaksi;
 use App\Http\Controllers\ownerController;
 use App\Http\Controllers\strukController;
 use FontLib\Table\Type\name;
+use App\Http\Controllers\riwayatController;
 
 Route::resource('pengguna', penggunaController::class);
 Route::resource('transaksi', transaksiController::class);
-Route::resource('kasir', kasirController::class);
+// Route::resource('kasir', kasirController::class);
 Route::resource('buku', bukuController::class);
 Route::post('kasir/buku/{id_buku}', [kasirController::class, 'tambahKeKeranjang'])->name('tambahkeranjang');
 Route::post('kasir/hapusdarikeranjang/{id_buku}', [kasirController::class, 'hapusDariKeranjang'])->name('hapuskeranjang');
@@ -83,6 +84,12 @@ Route::get('/owner/kategori',[ownerController::class, 'kategori'])->name('owner.
 route::get('/owner/transaksi/filter',[ownerController::class, 'filter'])->name('owner.filter');
 
 Route::get('owner/transaksi/pdf',[ownerController::class, 'generatePdf'])->name('owner.Pdftransaksi');
+
+
+
+Route::get('kasir/riwayat', [kasirController::class, 'riwayat'])->name('riwayat');
+Route::post('/kasir', [kasirController::class, 'store'])->name('kasir.store');
+
 
 // Route::middleware(['checkRole:Kasir'])->group(function () {
 //     Route::get('/kasir', function () {

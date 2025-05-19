@@ -20,6 +20,7 @@
                     <th class="px-6 py-3 font-semibold">No.</th>
                     <th class="px-6 py-3 font-semibold">Cover</th>
                     <th class="px-6 py-3 font-semibold">Judul</th>
+                    <th class="px-6 py-3 font-semibold">Kategori</th>
                     <th class="px-6 py-3 font-semibold">Penerbit</th>
                     <th class="px-6 py-3 font-semibold">Pengarang</th>
                     <th class="px-6 py-3 font-semibold">Tahun Terbit</th>
@@ -36,6 +37,7 @@
                         <img src="{{ asset('storage/cover/' . $buku->cover) }}" alt="cover buku" class="w-16 h-20 object-cover rounded shadow border">
                     </td>
                     <td class="px-6 py-4">{{ $buku->judul }}</td>
+                    <td class="'px-6 py-4">{{ $buku->kategori->nama_Kategori }}</td>
                     <td class="px-6 py-4">{{ $buku->penerbit }}</td>
                     <td class="px-6 py-4">{{ $buku->pengarang }}</td>
                     <td class="px-6 py-4">{{ $buku->tahun }}</td>

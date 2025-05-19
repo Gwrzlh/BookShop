@@ -1,195 +1,133 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Halaman Kasir - Transaksi</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background: linear-gradient(to right, #f8f9fa, #e9ecef);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+@extends('layouts.kasir')
 
-        .kasir-header {
-            margin-top: 30px;
-            margin-bottom: 20px;
-        }
+@section('content')
 
-        .kasir-header h2 {
-            font-weight: 700;
-            color: #343a40;
-        }
+<!-- ... bagian <head> tetap sama seperti milikmu ... -->
 
-        .btn-outline-danger {
-            border-radius: 30px;
-        }
-
-        .card {
-            border: none;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease-in-out;
-        }
-
-        .card:hover {
-            transform: scale(1.02);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-        }
-
-        .card img {
-            height: 200px;
-            object-fit: cover;
-        }
-
-        .card-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-        }
-
-        .btn-primary {
-            border-radius: 30px;
-        }
-
-        .table thead {
-            background-color: #343a40;
-            color: #fff;
-        }
-
-        .form-control {
-            border-radius: 12px;
-            box-shadow: none !important;
-        }
-
-        .btn-success {
-            border-radius: 30px;
-            font-weight: bold;
-        }
-
-        .alert {
-            border-radius: 16px;
-        }
-
-        .table th, .table td {
-            vertical-align: middle;
-        }
-
-        .section-title {
-            margin-top: 40px;
-            margin-bottom: 20px;
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: #495057;
-        }
-    </style>
-</head>
-<body>
-    <div class="container py-4">
-        <div class="d-flex justify-content-between align-items-center kasir-header">
-            <h2>🧾 Transaksi Baru - Halaman Kasir</h2>
-            <a href="{{ route('logout') }}" class="btn btn-outline-danger">Logout</a>
-        </div>
-
-        <div class="section-title">📚 Daftar Buku</div>
-        <div class="row">
-            @foreach ($buku as $item)
-            <div class="col-md-3">
-                <div class="card mb-4">
-                    <img src="{{ asset('storage/cover/'.$item->cover) }}" class="card-img-top" alt="{{ $item->judul }}">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $item->judul }}</h5>
-                        <h2 class="card-title">{{ $item->kategori->nama_kategori }}</h2>
-                        <p class="text-muted">Harga: <strong>Rp {{ number_format($item->harga, 0, ',', '.') }}</strong></p>
-                        <form action="{{ route('tambahkeranjang', $item->id_buku) }}" method="POST">
-                            @csrf
-                            <button type="submit" class="btn btn-primary w-100">+ Tambah ke Keranjang</button>
+    <body class="bg-gradient-to-r from-gray-100 to-gray-200 font-sans">
+        <div class="flex flex-col lg:flex-row gap-6">
+            <!-- Kolom Kiri: Daftar Buku dan Filter -->
+            <div class="flex-1">
+                <!-- Filter Kategori -->
+                <div class="flex flex-wrap gap-2 mb-6">
+                    <a href="{{ route('kasir', ['kategori' => 'all']) }}" class="px-4 py-2 bg-indigo-100 text-indigo-700 border border-indigo-300 rounded-full hover:bg-indigo-600 hover:text-white transition-all" > All</a>
+                    @foreach ($kategori as $kate)
+                        <form action="{{ route('kasir') }}" method="GET">
+                            <input type="hidden" name="kategori" value="{{ $kate->id }}">
+                            <button type="submit"
+                                class="px-4 py-2 bg-indigo-100 text-indigo-700 border border-indigo-300 rounded-full hover:bg-indigo-600 hover:text-white transition-all">
+                                {{ $kate->nama_Kategori }}
+                            </button>
                         </form>
+                    @endforeach
+                </div>
+
+                         @if(session('error'))
+                      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-2 rounded">
+                              {{ session('error') }}
+                      </div>
+                           @endif
+        
+                <!-- Daftar Buku -->
+                <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+                    @foreach ($buku as $item)
+                    <div class="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden">
+                        <img src="{{ asset('storage/cover/'.$item->cover) }}" class="w-full h-40 object-cover">
+                        <div class="p-4">
+                            <h4 class="font-bold text-gray-800 text-sm truncate">{{ $item->judul }}</h4>
+                            <p class="text-xs text-gray-500">{{ $item->kategori->nama_Kategori }}</p>
+                            <p class="text-s text-gray-500">{{ $item->stock }}</p>
+                            <p class="mt-1 text-indigo-600 font-semibold text-sm">Rp {{ number_format($item->harga, 0, ',', '.') }}</p>
+                            <form action="{{ route('tambahkeranjang', $item->id_buku) }}" method="POST" class="mt-2">
+                                @csrf
+                                <button class="w-full bg-indigo-500 text-white py-2 text-sm rounded-lg hover:bg-indigo-600">
+                                    Tambah
+                                </button>
+                            </form>
+                           
+                        </div>
                     </div>
+                    @endforeach
                 </div>
             </div>
-            @endforeach
-        </div>
-
-        <div class="section-title">🛒 Daftar Buku yang Dibeli</div>
-        @if (session()->has('keranjang') && count(session('keranjang')) > 0)
-        <div class="table-responsive">
-            <table class="table table-bordered table-hover mt-3">
-                <thead>
-                    <tr>
-                        <th>Judul</th>
-                        <th>Harga</th>
-                        <th>Jumlah</th>
-                        <th>Subtotal</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
-                <tbody>
+        
+            <!-- Kolom Kanan: Panel Checkout -->
+            <div class="w-full lg:w-1/3 bg-white shadow-lg rounded-xl p-6 sticky top-6 h-fit">
+                <h3 class="text-lg font-semibold mb-4 text-gray-700">Checkout</h3>
+        
+                @if(session('keranjang'))
+                <table class="w-full text-sm mb-4">
                     @foreach (session('keranjang') as $item)
-                    <tr>
-                        <td>{{ $item['judul'] }}</td>
-                        <td>Rp {{ number_format($item['harga'], 0, ',', '.') }}</td>
-                        <td>{{ $item['jumlah'] }}</td>
-                        <td>Rp {{ number_format($item['harga'] * $item['jumlah'], 0, ',', '.') }}</td>
-                        <td>
+                    <tr class="border-b">
+                        <td class="py-2">{{ $item['judul'] }}</td>
+                        <td class="py-2">{{ $item['jumlah'] }}x</td>
+                        <td class="py-2">Rp {{ number_format($item['harga'], 0, ',', '.') }}</td>
+                        {{-- <td>{{ number_format($item['jumlahSeluruh']) }}</td> --}}
+                        <td class="py-2">
+                                Total: Rp {{ number_format($item['harga'] * $item['jumlah'], 0, ',', '.') }}
+                            
+                        </td>
+                        <td class="py-2">
                             <form action="{{ route('hapuskeranjang', $item['id_buku']) }}" method="POST">
                                 @csrf
-                                <button type="submit" class="btn btn-sm btn-outline-danger">Hapus</button>
+                                <button class="text-red-600 hover:underline text-xs">Hapus</button>
                             </form>
                         </td>
+                        @endforeach 
+                        <div>
+                           Rp.{{ number_format(array_sum(array_map(function($item){
+                            return $item['harga'] * $item['jumlah'];
+                        }, session('keranjang'))), 0, ',', '.') }}
+                        </div>
+
+                       
                     </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-
-        <form action="{{ route('kasir.store') }}" method="POST" class="mt-4">
-            @csrf
-            <input type="hidden" name="id_pengguna" value="{{ session('logged_user') }}">
-
-            <div class="row g-3">
-                <div class="col-md-6">
-                    <label for="nama_pembeli" class="form-label">🧑 Nama Pembeli:</label>
-                    <input type="text" name="nama_pembeli" class="form-control" required>
-                </div>
-
-                <div class="col-md-6">
-                    <label for="bayar" class="form-label">💵 Bayar:</label>
-                    <input type="number" name="bayar" class="form-control" required>
-                </div>
+                </table>
+        
+                <form action="{{ route('kasir.store') }}" method="post">
+                    @csrf
+                    <input type="hidden" name="id_pengguna" value="{{ session('logged_user') }}">
+        
+                    <div class="mb-2">
+                        <label class="block text-gray-600 text-sm mb-1">Nama Pembeli</label>
+                        <input type="text" name="nama_pembeli" class="w-full border px-3 py-2 rounded-md" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-600 text-sm mb-1">Bayar</label>
+                        <input type="number" name="bayar" class="w-full border px-3 py-2 rounded-md" required>
+                    </div>
+        
+                  
+        
+                    <button type="submit" class="w-full bg-indigo-600 text-white py-3 rounded-lg text-base hover:bg-indigo-700 transition">
+                        Bayar
+                    </button>
+                </form>
+                @else
+                    <p class="text-gray-500">Keranjang masih kosong.</p>
+                @endif
             </div>
-
-            <div class="d-grid mt-4">
-                <button type="submit" class="btn btn-success btn-lg">✅ Proses Transaksi</button>
-            </div>
-        </form>
-
-        @else
-        <div class="alert alert-warning mt-3">
-            ⚠️ Tidak ada buku yang ditambahkan ke transaksi.
         </div>
+    
+        @if(session('id_transaksi'))
+        <script>
+            window.onload = function () {
+                const link = document.createElement('a');
+                link.href = "{{ route('GenerateStruk', session('id_transaksi')) }}";
+                link.setAttribute('download', 'struk.pdf');
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+    
+                fetch("{{ route('ClearIdTransaksi') }}", {
+                    method: "POST",
+                    headers: {
+                        'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                    }
+                });
+            };
+        </script>
         @endif
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    @if(session('id_transaksi'))
-    <script>
-        window.onload = function () {
-            const link = document.createElement('a');
-            link.href = "{{ route('GenerateStruk', session('id_transaksi')) }}";
-            link.setAttribute('download', 'struk.pdf');
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-
-            fetch("{{ route('ClearIdTransaksi') }}", {
-                method: "POST",
-                headers: {
-                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                }
-            });
-        };
-    </script>
-    @endif
-</body>
-</html>
+    </body>
+        
+@endsection

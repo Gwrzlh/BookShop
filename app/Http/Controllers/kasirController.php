@@ -7,23 +7,40 @@ use App\Models\detailTransaksi;
 use App\Models\transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Sleep;
+use App\Models\kategori;
 
 
 
 class kasirController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $transaksi=transaksi::with('detailTransaksi.buku', 'pengguna')->orderBy('id_transaksi', 'desc')->get();
-        $buku = buku::all();
-        return view('kasir.index', compact('buku','transaksi'));
+        $kategori = Kategori::all();
+
+    // Filter buku berdasarkan kategori jika ada parameter
+    $buku = Buku::query();
+    if ($request->has('kategori') && $request->kategori !== 'all') {
+        $buku->where('kategori_id', $request->kategori);
+    }
+    $buku = $buku->get();
+
+    return view('kasir.index', [
+        'kategori' => $kategori,
+        'buku' => $buku,
+    ]);
     }
     public function tambahKeKeranjang($id_buku)
     {
         $buku = buku::findOrFail($id_buku);
         $keranjang = session()->get('keranjang', []);
 
-        // Cek apakah buku sudah ada di keranjang
+
+        if ($buku->stock < 1) {
+          return redirect()->route('kasir')->with('error', 'Stock Habis!');
+        }
+
+       
+        
         if (isset($keranjang[$id_buku])) {
             $keranjang[$id_buku]['jumlah'] += 1;
         } else {
@@ -32,6 +49,8 @@ class kasirController extends Controller
                 'judul' => $buku->judul,
                 'harga' => $buku->harga,
                 'jumlah' => 1,
+                'jumlahSeluruh' => $buku->harga * 1,
+            
             ];
         }
 
@@ -81,9 +100,11 @@ class kasirController extends Controller
             'total_harga' => $totalHarga,
         ]);
     
-     $penguranganstock = buku::findOrFail($idBuku);
+        $penguranganstock = buku::findOrFail($idBuku);
         $penguranganstock->stock -= $keranjang[$idBuku]['jumlah'];
         $penguranganstock->save();
+
+        // $totalKeranjang = $totalHarga->count();
 
 
         // Simpan detail transaksi
@@ -111,6 +132,33 @@ class kasirController extends Controller
         // return view()
         
     }
+    public function kategoris()
+    {
+        $kategoris = kategori::all();
+        return view('kasir.index', compact('kategoris'));
+    }
+    public function riwayat(request $request )
+    {
+        $query = transaksi::with('detailTransaksi.buku', 'pengguna');
+         
+   
+        if ($request->filled('dari') && $request->filled('sampai')) {
+            $request->validate([
+                'dari' => 'required|date',
+                'sampai' => 'required|date',
+            ]);
+    
+            $query->whereBetween('tgl_beli', [$request->dari, $request->sampai]);
+        }
+        session(['transaksiFilter' => $query->get()]);
+        $transaksi = $query->latest()->paginate(7);
+    
+        // Total pendapatan juga ikut query (sudah terfilter kalau ada)
+        $total_pendapatan = $query->sum('total_harga');
+    
+        return view('kasir.riwayat', compact('transaksi', 'total_pendapatan'));
+    }
+    
 
 
 }

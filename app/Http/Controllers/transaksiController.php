@@ -15,7 +15,8 @@
         public function index()
         {
             $transaksi = transaksi::with('detailTransaksi.buku', 'pengguna')->latest()->paginate(7);
-            return view('admin.transkasi', compact('transaksi'));
+            $total_pendapatan = transaksi::sum('total_harga');
+            return view('admin.transkasi', compact('transaksi','total_pendapatan'));
         }
 
         /**

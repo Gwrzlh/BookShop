@@ -52,6 +52,7 @@ class ownerController extends Controller
    public function transaksi(Request $request)
    {
        $query = transaksi::with('detailTransaksi.buku', 'pengguna');
+         
    
        if ($request->filled('dari') && $request->filled('sampai')) {
            $request->validate([

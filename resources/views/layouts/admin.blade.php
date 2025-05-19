@@ -12,9 +12,7 @@
     <aside class="w-64 bg-indigo-600 text-white flex flex-col">
         <!-- Logo -->
         <div class="flex items-center justify-center h-20 border-indigo-500">
-            <svg class="h-8 w-8 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h4l3 8 4-16 3 8h4" />
-            </svg>
+           <h1 class="font-bold">DapBookShop</h1>
         </div>
 
         <!-- Menu -->
@@ -42,7 +40,7 @@
         <!-- Navbar/Header -->
         <header class="bg-white shadow-md p-4 flex justify-between items-center">
             <span class="text-lg font-semibold text-indigo-700">
-                Selamat Datang, {{ session('namaLengkap') }}
+                WELCOME TO ADMIN DASHBOARD
             </span>
             <a href="{{ route('logout') }}" class="bg-rose-600 hover:bg-rose-500 text-white px-4 py-2 rounded-lg transition">
                 Logout
